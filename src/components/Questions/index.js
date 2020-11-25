@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const BASE_API_URL = 'http://localhost:8000/api/question/';
+const BASE_API_URL = 'http://localhost:8080/api';
 
 export default {
   name: 'Question',
   data() {
     return {
-      todos: [],
+      questions: [],
       addTodoForm: {
         uid: 0,
         description: '',
@@ -28,10 +28,11 @@ export default {
     };
   },
   methods: {
-    getTodos() {
+    getQuestion() {
 //      let tasks = localStorage.getItem("tasks");
-    axios.get(`${BASE_API_URL}/drinks/`).then((response) => {
-      this.questions= response.data;
+    axios.get(`${BASE_API_URL}/question/`).then((response) => {
+      this.questions=response.data;
+      console.log(response);
     });
 
 //      this.todos = JSON.parse(tasks);
@@ -122,6 +123,6 @@ export default {
     },
   },
   created() {
-    this.getTodos();
+    this.getQuestion();
   },
 };
