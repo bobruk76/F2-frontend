@@ -31,9 +31,9 @@
         </thead>
 
         <tbody>
-          <tr v-for="(todo, index) in todos" :key="index">
-            <td class="todo-uid">{{ todo.uid }}</td>
-            <td>{{ todo.description }}</td>
+          <tr v-for="(question, index) in questions" :key="index">
+            <td class="todo-uid">{{ question.uid }}</td>
+            <td>{{ question.title }}</td>
             <td>
               <div class="btn-group" role="group">
                     <button type="button"

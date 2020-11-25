@@ -1,5 +1,9 @@
+import axios from 'axios';
+
+const BASE_API_URL = 'http://localhost:8000/api/question/';
+
 export default {
-  name: 'Todo',
+  name: 'Question',
   data() {
     return {
       todos: [],
@@ -25,43 +29,14 @@ export default {
   },
   methods: {
     getTodos() {
-      let tasks = localStorage.getItem("tasks");
+//      let tasks = localStorage.getItem("tasks");
+    axios.get(`${BASE_API_URL}/drinks/`).then((response) => {
+      this.questions= response.data;
+    });
 
-      if (tasks === null) {
-        tasks = `[
-              {
-                "description": "прочитать книгу",
-                "is_completed": false,
-                "uid": 1
-              },
-              {
-                "description": "учиться жонглировать 30 минут",
-                "is_completed": false,
-                "uid": 2
-              },
-              {
-                "description": "помыть посуду",
-                "is_completed": false,
-                "uid": 3
-              },
-              {
-                "description": "поесть",
-                "is_completed": false,
-                "uid": 4
-              }
-            ]`;
-        localStorage.setItem("tasks", tasks);
-      }
-
-      this.todos = JSON.parse(tasks);
-      this.calcCounts();
+//      this.todos = JSON.parse(tasks);
     },
 
-    calcCounts(){
-      localStorage.setItem("tasksCount", this.todos.length);
-      this.countTasks.completed = this.todos.filter((item) => {return item.is_completed}).length;
-      this.countTasks.un_completed = this.todos.filter((item) => {return !item.is_completed}).length;
-    },
 
     resetForm() {
       this.addTodoForm.description = '';
