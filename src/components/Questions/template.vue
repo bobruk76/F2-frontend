@@ -32,8 +32,15 @@
 
         <tbody>
           <tr v-for="(question, index) in questions" :key="index">
-            <td class="todo-uid">{{ question.uid }}</td>
-            <td>{{ question.title }}</td>
+            <td class="todo-uid">{{ question.id }}</td>
+            <td>
+              {{ question.content }}
+              <ul>
+                <li v-for="(answer, index) in question.answers" :key="index">
+                  {{ answer.content }}
+                </li>
+              </ul>
+            </td>
             <td>
               <div class="btn-group" role="group">
                     <button type="button"
