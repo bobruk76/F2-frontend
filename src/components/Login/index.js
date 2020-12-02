@@ -18,15 +18,14 @@ export default {
       };
       const config = {
         headers: {
-          'X-CSRFToken': localStorage.getItem("csrftoken");
+          'X-CSRFToken': localStorage.getItem("csrftoken"),
 //          this.$cookies.get('csrftoken'),
         },
       };
       axios.post(AUTH_URL, requestData, config)
         .then((response) => {
           localStorage.setItem('jwt_token', response.data.access);
-//          this.$cookies.set('jwt_token', response.data.access);
-          console.log(response.data.access);
+          localStorage.setItem('username', requestData.username);
           console.log('Token set');
         });
       this.username = '';

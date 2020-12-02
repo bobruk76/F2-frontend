@@ -3,15 +3,18 @@
   <div class="login">
     <h2>Введите логин и пароль и нажмите [Enter]</h2>
     <form @keydown.enter="onSubmit">
+      <div class="form-group">
       <label>
         Логин:
-        <input type="text" v-model="username">
+        <input class="form-control" type="text" v-model="username">
       </label>
       <br>
       <label>
         Пароль:
-        <input type="password" v-model="password">
+        <input class="form-control" type="password" v-model="password">
       </label>
+      </div>
+      <button type="submit" class="btn btn-success">Авторизоваться</button>
     </form>
   </div>
     </div>
