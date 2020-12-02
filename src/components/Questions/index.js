@@ -6,6 +6,7 @@ export default {
   name: 'Question',
   data() {
     return {
+      checkedAnsers: [],
       questions: [],
       addTodoForm: {
         uid: 0,

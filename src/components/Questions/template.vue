@@ -35,11 +35,20 @@
             <td class="todo-uid">{{ question.id }}</td>
             <td>
               {{ question.content }}
-              <ul>
+              <ul class="list-group">
+
                 <li v-for="(answer, index) in question.answers" :key="index">
-                  {{ answer.content }}
+                   <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input"
+                                 :id="answer.id" :value="answer.id"  v-model="checkedAnsers">
+
+                          <label class="custom-control-label" :for="answer.id">
+                            {{ answer.content }}
+                          </label>
+                    </div>
                 </li>
               </ul>
+              <span>Отмеченные ответы: {{ checkedAnsers }}</span>
             </td>
             <td>
               <div class="btn-group" role="group">
