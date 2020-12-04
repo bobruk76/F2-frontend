@@ -2,9 +2,6 @@ button#task-add {
     margin-top: 20px;
     margin-bottom: 20px;
   }
-  h1, td {
+  h1, h2, h3{
     text-align: left;
-  }
-  .todo-uid {
-    text-align: right;
   }

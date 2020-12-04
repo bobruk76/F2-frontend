@@ -21,24 +21,19 @@
         Добавить задачу
       </button>
 
-      <table class="table table-dark table-stripped table-hover">
-        <thead class="thead-light">
-          <tr>
-            <th>Uid</th>
-            <th>Описание</th>
-            <th></th>
-          </tr>
-        </thead>
 
-        <tbody>
-          <tr v-for="(question, index) in questions" :key="index">
-            <td class="todo-uid">{{ question.id }}</td>
-            <td>
-              {{ question.content }}
+          <div v-for="(question, index) in questions" :key="index">
+            <h2> {{ question.title }}</h2>
+            <div >
+                <h3 v-html="question.content">
+                  {{ question.content }}
+                </h3>
+
               <ul class="list-group">
 
-                <li v-for="(answer, index) in question.answers" :key="index">
-                   <div class="custom-control custom-checkbox">
+                <li v-for="(answer, index) in question.answers" :key="index"
+                    class="list-group-item list-group-item-action list-group-item-light">
+                   <div class="custom-control custom-checkbox text-left">
                           <input type="checkbox" class="custom-control-input"
                                  :id="answer.id" :value="answer.id"  v-model="checkedAnsers">
 
@@ -48,28 +43,8 @@
                     </div>
                 </li>
               </ul>
-              <span>Отмеченные ответы: {{ checkedAnsers }}</span>
-            </td>
-            <td>
-              <div class="btn-group" role="group">
-                    <button type="button"
-                        class="btn btn-secondary btn-sm"
-                        v-b-modal.todo-modal
-                        @click="updateTodo(todo)">
-                    Обновить
-                </button>
-                &nbsp;
-                <button type="button"
-                        class="btn btn-danger btn-sm"
-                        @click="deleteTodo(todo)">
-                  X
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-
-      </table>
+            </div>
+          </div>
 
     <b-modal ref="addTodoModal"
             id="todo-modal"
