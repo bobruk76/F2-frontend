@@ -19,7 +19,6 @@ export default {
       const config = {
         headers: {
           'X-CSRFToken': localStorage.getItem("csrftoken"),
-//          this.$cookies.get('csrftoken'),
         },
       };
       axios.post(AUTH_URL, requestData, config)

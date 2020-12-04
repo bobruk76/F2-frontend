@@ -1,7 +1,10 @@
 <template>
   <div id="app">
+    <div>
+      {{  username  }}
+    </div>
     <div id="nav">
-      <router-link to="/">Questions</router-link>
+      <router-link to="/questions">Questions</router-link> |
       <router-link to="/login">Login</router-link>
     </div>
     <router-view/>
@@ -30,3 +33,13 @@
   color: #42b983;
 }
 </style>
+<script>
+export default {
+  name: 'App',
+  data() {
+    return {
+      username: localStorage.getItem("username"),
+    };
+  },
+};
+</script>

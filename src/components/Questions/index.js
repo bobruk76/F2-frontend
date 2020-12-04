@@ -6,6 +6,7 @@ export default {
   name: 'Question',
   data() {
     return {
+      username: '',
       checkedAnsers: [],
       questions: [],
       addTodoForm: {
@@ -30,13 +31,18 @@ export default {
   },
   methods: {
     getQuestion() {
-//      let tasks = localStorage.getItem("tasks");
-    axios.get(`${BASE_API_URL}/question/`).then((response) => {
+      const jwt = localStorage.getItem("jwt_token");
+      this.username = localStorage.getItem("username");
+      const config = {
+        headers: {
+          'X-CSRFToken': this.$cookies.get('csrftoken'),
+           Authorization: `Bearer ${jwt}`,
+        },
+      };
+    axios.get(`${BASE_API_URL}/question/`,config).then((response) => {
       this.questions=response.data;
       console.log(response);
     });
-
-//      this.todos = JSON.parse(tasks);
     },
 
 
