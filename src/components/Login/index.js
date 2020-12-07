@@ -26,7 +26,8 @@ export default {
           localStorage.setItem('jwt_token', response.data.access);
           localStorage.setItem('username', requestData.username);
           console.log('Token set');
-        });
+        })
+        .catch(error => console.log(error));;
       this.username = '';
       this.password = '';
     },

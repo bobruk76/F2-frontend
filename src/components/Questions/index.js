@@ -6,8 +6,7 @@ export default {
   name: 'Question',
   data() {
     return {
-      username: '',
-      checkedAnsers: [],
+      checkedAnswers: [],
       questions: [],
       addTodoForm: {
         uid: 0,
@@ -32,7 +31,6 @@ export default {
   methods: {
     getQuestion() {
       const jwt = localStorage.getItem("jwt_token");
-      this.username = localStorage.getItem("username");
       const config = {
         headers: {
           'X-CSRFToken': this.$cookies.get('csrftoken'),
@@ -46,45 +44,52 @@ export default {
     },
 
 
-    resetForm() {
-      this.addTodoForm.description = '';
-      this.addTodoForm.is_completed = [];
-    },
-
     onSubmit(event) {
       event.preventDefault();
-      this.$refs.addTodoModal.hide();
 
-      if (this.formSetting.title == "Добавить задачу") {
-
-        let max_uid = Math.max.apply(Math,this.todos.map(function(o) { return o.uid; }));
-        if(!isFinite(max_uid)) {
-          max_uid = 0;
-        }
-        let desc = this.addTodoForm.description
-
-        this.todos.push({
-          description: desc,
-          is_completed: this.addTodoForm.is_completed[0] || false,
-          uid: max_uid+1,
-        });
-
-        localStorage.setItem("tasks", JSON.stringify(this.todos));
-        this.addConfirmation('info',`Задача "${desc}" добавлена`);
-        this.calcCounts();
-      } else {
-        this.todos.forEach(item => {
-          if(item.is_completed.length == 0) {
-           item.is_completed = false;
-          }
-        });
-        localStorage.setItem("tasks", JSON.stringify(this.todos));
-        this.addConfirmation('success','Задача обновлена');
-        this.getTodos();
-      }
-
-      this.resetForm();
+      const data = JSON.stringify(this.checkedAnswers);
+      const jwt = localStorage.getItem("jwt_token");
+      const headers = {
+          'X-CSRFToken': this.$cookies.get('csrftoken'),
+           Authorization: `Bearer ${jwt}`,
+      };
+    axios.post(`${BASE_API_URL}/results/`,
+    {
+     answers: data
     },
+    {
+        headers: headers
+     })
+    .then((response) => {
+          console.log(response);
+        })
+     .catch(error => console.log(error));
+    },
+//
+//    onSubmit(event) {
+//      event.preventDefault();
+
+
+
+//        let max_uid = Math.max.apply(Math,this.todos.map(function(o) { return o.uid; }));
+//        if(!isFinite(max_uid)) {
+//          max_uid = 0;
+//        }
+//        let desc = this.addTodoForm.description
+//
+//        this.todos.push({
+//          description: desc,
+//          is_completed: this.addTodoForm.is_completed[0] || false,
+//          uid: max_uid+1,
+//        });
+//
+//        localStorage.setItem("tasks", JSON.stringify(this.todos));
+//        this.addConfirmation('info',`Задача "${desc}" добавлена`);
+//        this.calcCounts();
+//
+//
+//      this.resetForm();
+//    },
 
     addConfirmation(variant, message) {
       this.confirmationSetting.variant=variant
@@ -96,22 +101,6 @@ export default {
       event.preventDefault();
       this.$refs.addTodoModal.hide();
       this.resetForm();
-    },
-
-    deleteTodo(todo) {
-
-      this.todos.uid
-      if(this.todos.filter((item) => {return item.uid == todo.uid}).length>0){
-
-        this.todos = this.todos.filter((item) =>{
-          return item!==todo;
-        });
-        localStorage.setItem("tasks", JSON.stringify(this.todos));
-        this.addConfirmation('danger','Задача удалена из списка');
-        this.calcCounts();
-      } else {
-        this.addConfirmation('danger','Данные некорректны! Повторите Попытку позже!');
-      }
     },
 
     setAddForm() {

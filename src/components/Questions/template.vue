@@ -21,7 +21,7 @@
         Добавить задачу
       </button>
 
-
+      <b-form @submit="onSubmit" @reset="onReset" class="w-100">
           <div v-for="(question, index) in questions" :key="index">
             <h2> {{ question.title }}</h2>
             <div >
@@ -35,7 +35,7 @@
                     class="list-group-item list-group-item-action list-group-item-light">
                    <div class="custom-control custom-checkbox text-left">
                           <input type="checkbox" class="custom-control-input"
-                                 :id="answer.id" :value="answer.id"  v-model="checkedAnsers">
+                                 :id="answer.id" :value="answer.id"  v-model="checkedAnswers">
 
                           <label class="custom-control-label" :for="answer.id">
                             {{ answer.content }}
@@ -45,6 +45,9 @@
               </ul>
             </div>
           </div>
+          <b-button type="submit" variant="primary">{{ formSetting.btnSubmit }}</b-button>
+          <b-button type="reset" variant="danger">Сброс</b-button>
+      </b-form>
 
     <b-modal ref="addTodoModal"
             id="todo-modal"
