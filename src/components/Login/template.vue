@@ -2,7 +2,7 @@
     <div class="container">
   <div class="login">
     <h2>Введите логин и пароль и нажмите [Enter]</h2>
-    <form @keydown.enter="onSubmit">
+    <form @keydown.enter="onSubmit" @submit="onSubmit">
       <div class="form-group">
       <label>
         Логин:
