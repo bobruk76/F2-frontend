@@ -9,6 +9,7 @@ export default {
       password: '',
 
       questionnaires: [],
+      questionnaire_id: '',
       config : {},
       checkedAnswers: [],
       questions: [],
@@ -62,8 +63,8 @@ export default {
         event.preventDefault();
 
         this.setConfig();
-        const data = JSON.stringify(this.checkedAnswers);
-        this.config.answers = data;
+        this.config.answers = JSON.stringify(this.checkedAnswers);
+        this.config.questionnaire_id = this.questionnaire_id
         console.log(this.config);
 
         axios.post(`${BASE_API_URL}/results/`,this.config).then((response) => {
@@ -87,9 +88,8 @@ export default {
 
     getThisQuestionnaire(event) {
         this.setConfig();
-        const id = event.currentTarget.id;
-
-        axios.get(`${BASE_API_URL}/questionnaire/${id}`,this.config).then((response) => {
+        this.questionnaire_id=event.currentTarget.id;
+        axios.get(`${BASE_API_URL}/questionnaire/${this.questionnaire_id}`,this.config).then((response) => {
           this.formTesting.title=response.data.title;
           this.questions=response.data.questions;
         });
