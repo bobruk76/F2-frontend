@@ -49,6 +49,7 @@ export default {
           this.getQuestionnaires();
         })
         .catch(error => {
+            this.username = '';
             this.addConfirmation('danger','Пароль или логин не верные!');
             console.log(error)})
         .finally(() => {
@@ -63,36 +64,46 @@ export default {
         event.preventDefault();
 
         this.setConfig();
-        this.config.answers = JSON.stringify(this.checkedAnswers);
-        this.config.questionnaire_id = this.questionnaire_id
-        console.log(this.config);
 
-        axios.post(`${BASE_API_URL}/results/`,this.config).then((response) => {
-              console.log(response);
-            })
-        .catch(error => console.log(error))
-        .finally(() => {
-           this.$nextTick(() => {
-              this.$bvModal.hide('testing-modal')
+        const requestData = {
+            answers: JSON.stringify(this.checkedAnswers),
+            questionnaireid: this.questionnaire_id,
+        };
+
+        axios.post(`${BASE_API_URL}/results/`, requestData, this.config)
+            .then((response) => {
+                  console.log(response);
+                })
+            .catch(error => {
+                console.log(error);
+                this.addConfirmation('danger',error);
+                })
+            .finally(() => {
+               this.$nextTick(() => {
+                  this.$bvModal.hide('testing-modal')
+                });
             });
-        });
     },
 
     getQuestionnaires() {
         this.setConfig();
         axios.get(`${BASE_API_URL}/questionnaire/`,this.config).then((response) => {
           this.questionnaires=response.data;
-          console.log(response);
         });
     },
 
     getThisQuestionnaire(event) {
         this.setConfig();
         this.questionnaire_id=event.currentTarget.id;
-        axios.get(`${BASE_API_URL}/questionnaire/${this.questionnaire_id}`,this.config).then((response) => {
+        axios.get(`${BASE_API_URL}/questionnaire/${this.questionnaire_id}`,this.config)
+        .then((response) => {
           this.formTesting.title=response.data.title;
           this.questions=response.data.questions;
-        });
+        })
+        .catch(error => {
+            console.log(error);
+            this.addConfirmation('danger','Опросник загрузить не удалось!');
+        })
     },
 
     setConfig() {

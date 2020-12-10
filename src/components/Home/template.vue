@@ -11,7 +11,7 @@
         {{ confirmationSetting.message }}
       </b-alert>
 
-        <b-button>{{  username  }}</b-button>
+        <p>{{  username  }}</p>
         <b-button v-b-modal.logon-modal>LogOn</b-button>
 
       <div class="list-group">
