@@ -10,9 +10,10 @@ export default {
 
       questionnaires: [],
       questionnaire_id: '',
-      config : {},
+      config: {},
       checkedAnswers: [],
       questions: [],
+      results: {},
 
       formLogon: {
         title: "Авторизация",
@@ -22,6 +23,10 @@ export default {
       formTesting: {
         title: "",
         btnSubmit: "Проверить",
+      },
+
+      formResult: {
+        title: "",
       },
 
       confirmationSetting:{
@@ -95,6 +100,12 @@ export default {
         });
     },
 
+    getResults() {
+        this.setConfig();
+        axios.get(`${BASE_API_URL}/results/`,this.config).then((response) => {
+          this.results=response.data.results;
+        });
+    },
     getThisQuestionnaire(event) {
         this.checkedAnswers=[]
         this.setConfig();

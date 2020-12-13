@@ -1,6 +1,30 @@
 <template>
   <div class="container">
 
+    <div>
+      <b-navbar type="dark" variant="dark">
+        <b-navbar-nav>
+          <b-nav-item href="#">Home</b-nav-item>
+
+          <b-nav-item-dropdown text="User" right>
+              <b-dropdown-item
+                    v-b-modal.logon-modal
+              >
+                LogOn
+              </b-dropdown-item>
+
+              <b-dropdown-item
+                      v-b-modal.result-modal
+
+              >
+                Results
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+           <b-nav-item href="#">{{ username }}</b-nav-item>
+        </b-navbar-nav>
+      </b-navbar>
+    </div>
+
       <b-alert
         :variant="confirmationSetting.variant"
         dismissible
@@ -11,8 +35,8 @@
         {{ confirmationSetting.message }}
       </b-alert>
 
-        <p>{{  username  }}</p>
-        <b-button v-b-modal.logon-modal>LogOn</b-button>
+<!--        <p>{{ username }}</p>-->
+<!--        <b-button v-b-modal.logon-modal>LogOn</b-button>-->
 
       <div class="list-group">
 
@@ -95,6 +119,26 @@
             </b-form>
 
          </b-modal>
+
+        <b-modal
+          ref="modal"
+          id="result-modal"
+          :title="formResult.title"
+          hide-footer
+          @show="getResults"
+        >
+      <b-list-group>
+
+            <b-list-group-item
+                    v-for="(result, index) in results" :key="index"
+                    class="d-flex justify-content-between align-items-center"
+            >
+                {{ result }}
+            </b-list-group-item>
+          </b-list-group>
+
+        </b-modal>
+
   </div>
 
 </template>
