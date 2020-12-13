@@ -50,7 +50,7 @@ export default {
         })
         .catch(error => {
             this.username = '';
-            this.addConfirmation('danger','Пароль или логин не верные!');
+            this.addConfirmation('danger','Пароль или(и) логин не верные!');
             console.log(error)})
         .finally(() => {
            this.password = '';
@@ -73,6 +73,9 @@ export default {
         axios.post(`${BASE_API_URL}/results/`, requestData, this.config)
             .then((response) => {
                   console.log(response);
+
+                  this.addConfirmation('success', `Правильных ответов ${response.data.count_correct_answers} из ${response.data.count_questionnaire_true_answers}
+                  неправильных ответов ${response.data.count_incorrect_answers}`, 10);
                 })
             .catch(error => {
                 console.log(error);
@@ -93,6 +96,7 @@ export default {
     },
 
     getThisQuestionnaire(event) {
+        this.checkedAnswers=[]
         this.setConfig();
         this.questionnaire_id=event.currentTarget.id;
         axios.get(`${BASE_API_URL}/questionnaire/${this.questionnaire_id}`,this.config)
@@ -116,10 +120,10 @@ export default {
       };
     },
 
-    addConfirmation(variant, message) {
+    addConfirmation(variant, message, dismissCountDown = 3) {
       this.confirmationSetting.variant=variant
       this.confirmationSetting.message = message;
-      this.confirmationSetting.dismissCountDown = 3;
+      this.confirmationSetting.dismissCountDown = dismissCountDown;
     },
   },
 
