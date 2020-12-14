@@ -127,15 +127,23 @@
           hide-footer
           @show="getResults"
         >
-      <b-list-group>
+            <table class="table table-dark table-stripped table-hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Опросник</th>
+                    <th>Правильных ответов</th>
+                    <th>Неправильных ответов</th>
+                  </tr>
+                </thead>
 
-            <b-list-group-item
-                    v-for="(result, index) in results" :key="index"
-                    class="d-flex justify-content-between align-items-center"
-            >
-                {{ result }}
-            </b-list-group-item>
-          </b-list-group>
+                <tbody>
+                    <tr v-for="(result, index) in results" :key="index">
+                        <td>{{ result.title }}</td>
+                        <td>{{ result.count_correct_answers }} из {{ result.count_questionnaire_true_answers }}</td>
+                        <td>{{ result.count_incorrect_answers }}</td>
+                    </tr>
+                </tbody>
+            </table>
 
         </b-modal>
 

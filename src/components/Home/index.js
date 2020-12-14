@@ -26,7 +26,7 @@ export default {
       },
 
       formResult: {
-        title: "",
+        title: "Итоги тестирования",
       },
 
       confirmationSetting:{
@@ -75,7 +75,7 @@ export default {
             questionnaireid: this.questionnaire_id,
         };
 
-        axios.post(`${BASE_API_URL}/results/`, requestData, this.config)
+        axios.post(`${BASE_API_URL}/test/`, requestData, this.config)
             .then((response) => {
                   console.log(response);
 
@@ -104,8 +104,10 @@ export default {
         this.setConfig();
         axios.get(`${BASE_API_URL}/results/`,this.config).then((response) => {
           this.results=response.data.results;
+          console.log(this.results);
         });
     },
+
     getThisQuestionnaire(event) {
         this.checkedAnswers=[]
         this.setConfig();
